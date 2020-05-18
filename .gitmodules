@@ -1,0 +1,9 @@
+[submodule "pack/slindsey/start/nerdtree"]
+	path = pack/slindsey/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "pack/slindsey/start/vim-airline"]
+	path = pack/slindsey/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "pack/slindsey/start/vim-airline-theme"]
+	path = pack/slindsey/start/vim-airline-theme
+	url = https://github.com/vim-airline/vim-airline-themes.git
