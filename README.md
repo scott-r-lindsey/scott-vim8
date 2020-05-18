@@ -6,7 +6,7 @@ This is Scott's VIM configuration for Vim 8
  * [The NERD Tree](https://github.com/scrooloose/nerdtree)
  * [Vim-Airline](https://github.com/vim-airline/vim-airline)
  
-And, a custom [.vimrc](/scott-vim8/blob/master/vimrc).
+And, a custom [.vimrc](./vimrc).
 
 
 
