@@ -70,7 +70,6 @@ let g:airline_theme = 'onehalfdark'
 
 
 " colors !
-"autocmd vimenter * colorscheme OceanicNext
-"autocmd vimenter * colorscheme nord
-"autocmd vimenter * colorscheme onehalfdark
-autocmd vimenter * colorscheme atom-dark-256
+colorscheme atom-dark-256
+autocmd BufNewFile,BufRead *.json colorscheme onehalfdark
+

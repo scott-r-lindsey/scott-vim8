@@ -31,3 +31,6 @@
 [submodule "submodule/onehalf"]
 	path = submodule/onehalf
 	url = https://github.com/sonph/onehalf.git
+[submodule "submodule/vim-json"]
+	path = submodule/vim-json
+	url = https://github.com/elzr/vim-json.git
