@@ -19,6 +19,18 @@ set shortmess+=I
 " Json formatting on F3
 map <F3> :%!python -m json.tool<CR>
 
+" JS formatting on f4
+map <F4> :Prettier<CR>
+
+" Colors 
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+" devicons
+set encoding=UTF-8
+
+
 " allow uppercase w/q
 :command W w
 :command Q q
@@ -31,6 +43,8 @@ set shiftwidth=4
 set expandtab
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
 
 " always show status line
 set laststatus=2
@@ -40,7 +54,6 @@ let &t_Co=256
 
 " ----- configure our cool plugins here ---------------------------------------
 
-
 " enable The NERD Tree
 map <F2> :NERDTreeToggle<CR>
 
@@ -48,5 +61,16 @@ map <F2> :NERDTreeToggle<CR>
 " airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'behelit'
+let g:airline_theme = 'onehalfdark'
 
+
+" vim-jsx-pretty
+"let g:vim_jsx_pretty_colorful_config = 1
+"let g:vim_jsx_pretty_highlight_close_tag = 1
+
+
+" colors !
+"autocmd vimenter * colorscheme OceanicNext
+"autocmd vimenter * colorscheme nord
+"autocmd vimenter * colorscheme onehalfdark
+autocmd vimenter * colorscheme atom-dark-256
