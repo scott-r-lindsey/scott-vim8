@@ -30,7 +30,6 @@ endif
 " devicons
 set encoding=UTF-8
 
-
 " allow uppercase w/q
 :command W w
 :command Q q
@@ -43,6 +42,7 @@ set shiftwidth=4
 set expandtab
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd FileType json setlocal shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
 
@@ -57,19 +57,18 @@ let &t_Co=256
 " enable The NERD Tree
 map <F2> :NERDTreeToggle<CR>
 
-
 " airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'onehalfdark'
 
-
 " vim-jsx-pretty
 "let g:vim_jsx_pretty_colorful_config = 1
 "let g:vim_jsx_pretty_highlight_close_tag = 1
-
 
 " colors !
 colorscheme atom-dark-256
 autocmd BufNewFile,BufRead *.json colorscheme onehalfdark
 
+" json
+let g:vim_json_syntax_conceal = 0
