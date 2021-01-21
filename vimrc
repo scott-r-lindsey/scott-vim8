@@ -42,6 +42,7 @@ set shiftwidth=4
 set expandtab
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd FileType scss setlocal shiftwidth=2 tabstop=2
 autocmd FileType json setlocal shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
