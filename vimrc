@@ -73,3 +73,6 @@ autocmd BufNewFile,BufRead *.json colorscheme onehalfdark
 
 " json
 let g:vim_json_syntax_conceal = 0
+
+" no history file plz
+let g:netrw_dirhistmax=0
