@@ -34,3 +34,6 @@
 [submodule "submodule/vim-json"]
 	path = submodule/vim-json
 	url = https://github.com/elzr/vim-json.git
+[submodule "submodule/ale"]
+	path = submodule/ale
+	url = https://github.com/dense-analysis/ale.git

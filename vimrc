@@ -76,3 +76,9 @@ let g:vim_json_syntax_conceal = 0
 
 " no history file plz
 let g:netrw_dirhistmax=0
+
+" ale config
+let g:ale_linters = {'javascript': ['eslint']}
+let b:ale_fixers = {'javascript': ['eslint']}
+let g:ale_fix_on_save = 1
+
