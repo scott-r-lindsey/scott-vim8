@@ -22,6 +22,9 @@ map <F3> :%!python -m json.tool<CR>
 " JS formatting on f4
 map <F4> :Prettier<CR>
 
+" Toggle ALE SignColumn on F5
+nnoremap <F5> :call ToggleSignColumn()<CR>
+
 " Colors 
 if (has("termguicolors"))
     set termguicolors
@@ -81,4 +84,22 @@ let g:netrw_dirhistmax=0
 let g:ale_linters = {'javascript': ['eslint']}
 let b:ale_fixers = {'javascript': ['eslint']}
 let g:ale_fix_on_save = 1
+
+" Toggle signcolumn.
+function! ToggleSignColumn()
+    if !exists("b:signcolumn_on") || b:signcolumn_on
+        set signcolumn=no
+        let b:signcolumn_on=0
+    else
+        set signcolumn=number
+        let b:signcolumn_on=1
+    endif
+endfunction
+
+" supress W11 warning
+autocmd FileChangedShell * :
+
+" doge config
+filetype plugin on
+let g:doge_comment_interactive = 0
 

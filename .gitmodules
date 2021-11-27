@@ -37,3 +37,9 @@
 [submodule "submodule/ale"]
 	path = submodule/ale
 	url = https://github.com/dense-analysis/ale.git
+[submodule "submodule/coc"]
+	path = submodule/coc
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "submodule/vim-doge"]
+	path = submodule/vim-doge
+	url = https://github.com/kkoomen/vim-doge.git
