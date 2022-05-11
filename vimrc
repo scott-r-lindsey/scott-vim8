@@ -1,5 +1,24 @@
 " ----- cool hacks at the top -------------------------------------------------
 
+command! ALEIgnoreEslint call AleIgnoreEslint()
+function! AleIgnoreEslint()
+  " https://stackoverflow.com/questions/54961318/vim-ale-shortcut-to-add-eslint-ignore-hint
+  let l:codes = []
+  if (!exists('b:ale_highlight_items'))
+    echo 'cannot ignore eslint rule without b:ale_highlight_items'
+    return
+  endif
+  for l:item in b:ale_highlight_items
+    if (l:item['lnum']==line('.') && l:item['linter_name']=='eslint')
+      let l:code = l:item['code']
+      call add(l:codes, l:code)
+    endif
+  endfor
+  if len(l:codes)
+    exec 'normal O/* eslint-disable-next-line ' . join(l:codes, ', ') . ' */'
+  endif
+endfunction
+
 " turn off swap file hand-holding
 set noswapfile
 
@@ -19,8 +38,8 @@ set shortmess+=I
 " Json formatting on F3
 map <F3> :%!python -m json.tool<CR>
 
-" JS formatting on f4
-map <F4> :Prettier<CR>
+" insert eslint-ignore automatically
+nnoremap <F4> :call AleIgnoreEslint()<CR>
 
 " Toggle ALE SignColumn on F5
 nnoremap <F5> :call ToggleSignColumn()<CR>
