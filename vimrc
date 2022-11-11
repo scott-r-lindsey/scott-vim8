@@ -28,21 +28,20 @@ set noswapfile
 :au SwapExists * let v:swapchoice='d'
 :augroup END
 
-" Show trailing whitespace; http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-:highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-:match ExtraWhitespace /\s\+$/
-
 " no startup message
 set shortmess+=I
 
 " Json formatting on F3
-map <F3> :%!python -m json.tool<CR>
+map <F3> :%!~/.vim/indent-json.sh<CR>
 
 " insert eslint-ignore automatically
 nnoremap <F4> :call AleIgnoreEslint()<CR>
 
 " Toggle ALE SignColumn on F5
 nnoremap <F5> :call ToggleSignColumn()<CR>
+
+" strip trialing whitespace
+nnoremap <F6> :StripWhitespace<CR>
 
 " Colors 
 if (has("termguicolors"))
@@ -122,3 +121,5 @@ autocmd FileChangedShell * :
 filetype plugin on
 let g:doge_comment_interactive = 0
 
+" disable comment continuation
+autocmd FileType * set formatoptions-=cro
