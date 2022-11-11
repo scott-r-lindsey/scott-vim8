@@ -36,7 +36,7 @@ set noswapfile
 set shortmess+=I
 
 " Json formatting on F3
-map <F3> :%!python -m json.tool<CR>
+map <F3> :%!~/.vim/indent-json.sh<CR>
 
 " insert eslint-ignore automatically
 nnoremap <F4> :call AleIgnoreEslint()<CR>
