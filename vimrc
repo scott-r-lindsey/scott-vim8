@@ -43,7 +43,7 @@ nnoremap <F5> :call ToggleSignColumn()<CR>
 " strip trialing whitespace
 nnoremap <F6> :StripWhitespace<CR>
 
-" Colors 
+" Colors
 if (has("termguicolors"))
     set termguicolors
 endif
@@ -123,3 +123,7 @@ let g:doge_comment_interactive = 0
 
 " disable comment continuation
 autocmd FileType * set formatoptions-=cro
+
+" coc.nvim pres CR to select
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
