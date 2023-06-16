@@ -127,3 +127,6 @@ autocmd FileType * set formatoptions-=cro
 " coc.nvim pres CR to select
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
+" chat gpt
+let g:chat_gpt_max_tokens=4000
+

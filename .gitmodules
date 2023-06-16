@@ -49,3 +49,6 @@
 [submodule "submodule/coc.nvim"]
 	path = submodule/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
+[submodule "submodule/vim-chatgpt"]
+	path = submodule/vim-chatgpt
+	url = https://github.com/CoderCookE/vim-chatgpt.git
