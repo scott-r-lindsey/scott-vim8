@@ -1,5 +1,110 @@
-" ----- cool hacks at the top -------------------------------------------------
+" -----------------------------------------------------------------------------
+" install vim-plug if missing
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
 
+" install plugins
+call plug#begin()
+
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'gosukiwi/vim-atom-dark',
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'sonph/onehalf', { 'do': ':packadd onehalf-vim' }
+Plug 'CoderCookE/vim-chatgpt'
+Plug 'dense-analysis/ale'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'inside/vim-search-pulse'
+Plug 'RRethy/vim-illuminate'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'chrisbra/Colorizer'
+Plug 'airblade/vim-gitgutter'
+
+call plug#end()
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+:silent! packadd onehalf-vim
+
+" -----------------------------------------------------------------------------
+" general fixes
+
+" allow uppercase w/q
+:command W w
+:command Q q
+:command Wq wq
+:command WQ wq
+
+" no startup message
+set shortmess+=I
+
+" turn off swap file hand-holding
+set noswapfile
+
+" disable swap file warnings
+:augroup SwapClobber
+:au!
+:au SwapExists * let v:swapchoice='d'
+:augroup END
+
+" 256 colors party like 1990
+let &t_Co=256
+
+" leader
+set showcmd
+set timeoutlen=2000
+let mapleader = " "
+
+" Colors
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+" modern tabs
+set tabstop=4
+set shiftwidth=4
+set expandtab
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd FileType scss setlocal shiftwidth=2 tabstop=2
+autocmd FileType json setlocal shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd BufNewFile,BufRead *.tsx set filetype=javascript.jsx
+autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
+
+" always show status line
+set laststatus=2
+
+" supress W11 warning
+autocmd FileChangedShell * :
+
+" no history file plz
+let g:netrw_dirhistmax=0
+
+" json
+let g:vim_json_syntax_conceal = 0
+
+" disable comment continuation
+autocmd FileType * set formatoptions-=cro
+
+" no auto-indent
+filetype indent off
+
+" -----------------------------------------------------------------------------
+" functions
+
+" ale eslint disable generator
 command! ALEIgnoreEslint call AleIgnoreEslint()
 function! AleIgnoreEslint()
   " https://stackoverflow.com/questions/54961318/vim-ale-shortcut-to-add-eslint-ignore-hint
@@ -19,17 +124,84 @@ function! AleIgnoreEslint()
   endif
 endfunction
 
-" turn off swap file hand-holding
-set noswapfile
+" Toggle signcolumn.
+function! ToggleSignColumn()
+    if !exists("b:signcolumn_on") || b:signcolumn_on
+        set signcolumn=no
+        let b:signcolumn_on=0
+    else
+        set signcolumn=number
+        let b:signcolumn_on=1
+    endif
+endfunction
 
-" disable swap file warnings
-:augroup SwapClobber
-:au!
-:au SwapExists * let v:swapchoice='d'
-:augroup END
+" -----------------------------------------------------------------------------
+" color config
 
-" no startup message
-set shortmess+=I
+silent! colorscheme atom-dark-256
+
+augroup ColorschemePreferences
+  autocmd!
+    autocmd ColorScheme * highlight MatchParen cterm=bold ctermfg=cyan gui=bold guifg=cyan guibg=black
+    autocmd ColorScheme * highlight ALEErrorSign cterm=bold ctermfg=red gui=bold guifg=red
+    autocmd ColorScheme * highlight ALEWarningSign cterm=bold ctermfg=yellow gui=bold guifg=yellow
+    autocmd ColorScheme * highlight ALEInfoSign cterm=bold ctermfg=white gui=bold guifg=white
+augroup END
+
+autocmd BufNewFile,BufRead *.json colorscheme onehalfdark
+
+" -----------------------------------------------------------------------------
+" plugin config
+
+" airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme='onehalfdark'
+
+" ale
+" Tell ALE to use OmniSharp for linting C# files, and no other linters.
+let g:ale_linters = { 'cs': ['OmniSharp'] }
+let g:ale_linters = {'javascript': ['eslint']}
+let b:ale_fixers = {'javascript': ['eslint']}
+let g:ale_fix_on_save = 1
+
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
+let g:ale_sign_info = '󰌶'
+let g:ale_sign_style_error = ''
+let g:ale_sign_style_warning = ''
+let g:ale_linters = { 'cs': ['OmniSharp'] }
+
+" chatgpt
+let g:chat_gpt_max_tokens=3000
+
+" coc.nvim press CR to select
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+" Colorizer
+let g:colorizer_auto_color = 1
+
+" devicons
+set encoding=UTF-8
+
+" gitgutter
+let g:gitgutter_set_sign_backgrounds = 1
+
+" vim-jsx-pretty
+let g:vim_jsx_pretty_colorful_config = 1
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
+" Omnisharp
+let g:OmniSharp_server_use_net6 = 1
+
+" -----------------------------------------------------------------------------
+" custom shortcuts
+
+" fzf on f1
+map <F1> :FZF<CR>
+
+" enable The NERD Tree
+map <F2> :NERDTreeToggle<CR>
 
 " Json formatting on F3
 map <F3> :%!~/.vim/indent-json.sh<CR>
@@ -43,90 +215,54 @@ nnoremap <F5> :call ToggleSignColumn()<CR>
 " strip trialing whitespace
 nnoremap <F6> :StripWhitespace<CR>
 
-" Colors
-if (has("termguicolors"))
-    set termguicolors
-endif
+map <leader>h :noh<CR>
+map <leader><Left> :bp<CR>
+map <leader><Right> :bn<CR>
 
-" devicons
-set encoding=UTF-8
+augroup omnisharp_commands
+  autocmd!
 
-" allow uppercase w/q
-:command W w
-:command Q q
-:command Wq wq
-:command WQ wq
+  " Show type information automatically when the cursor stops moving.
+  " Note that the type is echoed to the Vim command line, and will overwrite
+  " any other messages in this space including e.g. ALE linting messages.
+  autocmd CursorHold *.cs OmniSharpTypeLookup
 
-" modern tabs
-set tabstop=4
-set shiftwidth=4
-set expandtab
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
-autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
-autocmd FileType scss setlocal shiftwidth=2 tabstop=2
-autocmd FileType json setlocal shiftwidth=2 tabstop=2
-autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
+  " The following commands are contextual, based on the cursor position.
+  autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfu <Plug>(omnisharp_find_usages)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfi <Plug>(omnisharp_find_implementations)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
+  autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+  autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
 
-" always show status line
-set laststatus=2
+  " Navigate up and down by method/property/field
+  autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
+  autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
+  " Find all code errors/warnings for the current solution and populate the quickfix window
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osgcc <Plug>(omnisharp_global_code_check)
+  " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+  " Repeat the last code action performed (does not use a selector)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
 
-" 256 colors party like 1990
-let &t_Co=256
+  autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
 
-" ----- configure our cool plugins here ---------------------------------------
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osnm <Plug>(omnisharp_rename)
 
-" enable The NERD Tree
-map <F2> :NERDTreeToggle<CR>
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
 
-" airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'onehalfdark'
+  " strip trialing whitespace
+  nnoremap <F12> :edit
 
-" vim-jsx-pretty
-"let g:vim_jsx_pretty_colorful_config = 1
-"let g:vim_jsx_pretty_highlight_close_tag = 1
+augroup END
 
-" colors !
-colorscheme atom-dark-256
-autocmd BufNewFile,BufRead *.json colorscheme onehalfdark
-
-" json
-let g:vim_json_syntax_conceal = 0
-
-" no history file plz
-let g:netrw_dirhistmax=0
-
-" ale config
-let g:ale_linters = {'javascript': ['eslint']}
-let b:ale_fixers = {'javascript': ['eslint']}
-let g:ale_fix_on_save = 1
-
-" Toggle signcolumn.
-function! ToggleSignColumn()
-    if !exists("b:signcolumn_on") || b:signcolumn_on
-        set signcolumn=no
-        let b:signcolumn_on=0
-    else
-        set signcolumn=number
-        let b:signcolumn_on=1
-    endif
-endfunction
-
-" supress W11 warning
-autocmd FileChangedShell * :
-
-" doge config
-filetype plugin on
-let g:doge_comment_interactive = 0
-
-" disable comment continuation
-autocmd FileType * set formatoptions-=cro
-
-" coc.nvim pres CR to select
-inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-
-" chat gpt
-let g:chat_gpt_max_tokens=4000
-
+" -----------------------------------------------------------------------------
