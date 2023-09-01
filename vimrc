@@ -82,6 +82,7 @@ autocmd FileType json setlocal shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.tsx set filetype=javascript.jsx
 autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.dockerfile set filetype=dockerfile
 
 " always show status line
 set laststatus=2
@@ -100,6 +101,9 @@ autocmd FileType * set formatoptions-=cro
 
 " no auto-indent
 filetype indent off
+
+" don't hide quotes
+set conceallevel=0
 
 " -----------------------------------------------------------------------------
 " functions
