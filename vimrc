@@ -139,6 +139,11 @@ function! ToggleSignColumn()
     endif
 endfunction
 
+function! GenerateUUID()
+    :let generatedUUID=system("python3  -c 'import uuid; print(uuid.uuid4(), end=\"\")'")
+    :execute "normal i" . generatedUUID
+endfunction
+
 " -----------------------------------------------------------------------------
 " color config
 
@@ -222,6 +227,8 @@ nnoremap <F6> :StripWhitespace<CR>
 map <leader>h :noh<CR>
 map <leader><Left> :bp<CR>
 map <leader><Right> :bn<CR>
+
+map <leader>d :call GenerateUUID()<CR>
 
 augroup omnisharp_commands
   autocmd!
