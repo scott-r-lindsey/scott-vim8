@@ -27,6 +27,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'chrisbra/Colorizer'
 Plug 'airblade/vim-gitgutter'
+Plug 'madox2/vim-ai'
 
 call plug#end()
 
@@ -202,6 +203,14 @@ let g:vim_jsx_pretty_highlight_close_tag = 1
 
 " Omnisharp
 let g:OmniSharp_server_use_net6 = 1
+
+" vim-ai
+let g:vim_ai_chat = {
+\  "options": {
+\    "model": "gpt-4",
+\    "temperature": 0.2,
+\  },
+\}
 
 " -----------------------------------------------------------------------------
 " custom shortcuts
