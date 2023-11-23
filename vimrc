@@ -28,6 +28,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'chrisbra/Colorizer'
 Plug 'airblade/vim-gitgutter'
 Plug 'madox2/vim-ai'
+Plug 'github/copilot.vim'
 
 call plug#end()
 
