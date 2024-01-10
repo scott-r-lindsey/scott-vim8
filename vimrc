@@ -29,6 +29,7 @@ Plug 'chrisbra/Colorizer'
 Plug 'airblade/vim-gitgutter'
 Plug 'madox2/vim-ai'
 Plug 'github/copilot.vim'
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
@@ -74,8 +75,8 @@ if (has("termguicolors"))
 endif
 
 " modern tabs
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
@@ -131,11 +132,13 @@ function! AleIgnoreEslint()
 endfunction
 
 " Toggle signcolumn.
-function! ToggleSignColumn()
+function! ToggleInfo()
     if !exists("b:signcolumn_on") || b:signcolumn_on
+        :ALEToggle
         set signcolumn=no
         let b:signcolumn_on=0
     else
+        :ALEToggle
         set signcolumn=number
         let b:signcolumn_on=1
     endif
@@ -229,7 +232,7 @@ map <F3> :%!~/.vim/indent-json.sh<CR>
 nnoremap <F4> :call AleIgnoreEslint()<CR>
 
 " Toggle ALE SignColumn on F5
-nnoremap <F5> :call ToggleSignColumn()<CR>
+nnoremap <F5> :call ToggleInfo()<CR>
 
 " strip trialing whitespace
 nnoremap <F6> :StripWhitespace<CR>
