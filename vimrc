@@ -290,3 +290,21 @@ augroup omnisharp_commands
 augroup END
 
 " -----------------------------------------------------------------------------
+" local config
+
+" Function to source all .vim files in a specified directory
+function! SourceDirectory(directory)
+    " Check if the directory exists
+    if isdirectory(a:directory)
+        " List all .vim files in the directory
+        for file in split(glob(a:directory . '*.vim'), '\n')
+            " Source each file
+            execute 'source' file
+        endfor
+    endif
+endfunction
+
+" Call the function with the path to your directory
+call SourceDirectory(expand('~/.vim/local_config/'))
+
+" -----------------------------------------------------------------------------
