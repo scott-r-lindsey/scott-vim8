@@ -82,6 +82,7 @@ autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
 autocmd FileType scss setlocal shiftwidth=2 tabstop=2
 autocmd FileType json setlocal shiftwidth=2 tabstop=2
+autocmd FileType cs setlocal shiftwidth=4 tabstop=4
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.tsx set filetype=javascript.jsx
 autocmd FileType javascript.jsx setlocal shiftwidth=2 tabstop=2
@@ -184,7 +185,19 @@ let g:ale_sign_warning = ''
 let g:ale_sign_info = '󰌶'
 let g:ale_sign_style_error = ''
 let g:ale_sign_style_warning = ''
-let g:ale_linters = { 'cs': ['OmniSharp'] }
+
+" ale python
+let g:ale_python_pylint_executable = 'pylint'
+let g:ale_python_black_executable = 'black'
+let g:ale_python_auto_poetry = 1
+
+" Enable pylint and black as linters and formatters
+let g:ale_linters = {'python': ['pylint']}
+let g:ale_fixers = {'python': ['black']}
+
+" Automatically fix files on save
+let g:ale_fix_on_save = 1
+
 
 " chatgpt
 let g:chat_gpt_max_tokens=3000
@@ -211,7 +224,7 @@ let g:OmniSharp_server_use_net6 = 1
 " vim-ai
 let g:vim_ai_chat = {
 \  "options": {
-\    "model": "gpt-4",
+\    "model": "gpt-4o",
 \    "temperature": 0.2,
 \  },
 \}
